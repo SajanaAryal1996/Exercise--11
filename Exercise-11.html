@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Exercise-11</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Exercise-11_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Exercise-11_files/libs/quarto-html/quarto.js"></script>
+<script src="Exercise-11_files/libs/quarto-html/popper.min.js"></script>
+<script src="Exercise-11_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Exercise-11_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Exercise-11_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Exercise-11_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Exercise-11_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Exercise-11_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Exercise-11_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exercise-11</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="practice-anova" class="level1">
+<h1><strong>Practice ANOVA</strong></h1>
+</section>
+<section id="preliminaries" class="level1">
+<h1>Preliminaries</h1>
+<ul>
+<li>Using the {tidyverse} <code>read_csv()</code> function, load the “AVONETdataset1.csv” dataset from <a href="https://raw.githubusercontent.com/difiore/ada-2024-datasets/main/AVONETdataset1.csv">this URL</a> as a “tibble” named <strong>d</strong>. As discussed in class, this is a recently published dataset that compiles morphological measurements and information on various ecological variables and geographic range data for more than 11,000 species of birds.</li>
+</ul>
+<blockquote class="blockquote">
+<ul>
+<li><p>Winnow the dataset to include only the following variables: <strong>Species1</strong>, <strong>Family1</strong>, <strong>Order1</strong>, <strong>Beak.Length_Culmen</strong>, <strong>Beak.Width</strong>, <strong>Beak.Depth</strong>, <strong>Tarsus.Length</strong>, <strong>Wing.Length</strong>, <strong>Tail.Length</strong>, <strong>Mass</strong>, <strong>Habitat</strong>, <strong>Migration</strong>, <strong>Trophic.Level</strong>, <strong>Trophic.Niche</strong>, <strong>Min.Latitude</strong>, <strong>Max.Latitude</strong>, <strong>Centroid.Latitude</strong>, <strong>Primary.Lifestyle</strong>, ** and <strong>Range.Size</strong></p></li>
+<li><p>Do a bit of exploratory data analysis with this dataset, e.g., using the {skimr} package. Which of the variables are categorical and which are numeric?</p></li>
+</ul>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.0     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the dataset</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/difiore/ada-2024-datasets/main/AVONETdataset1.csv"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(f, <span class="at">col_names =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 11009 Columns: 37
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (13): Species1, Family1, Order1, Avibase.ID1, Mass.Source, Mass.Refs.Oth...
+dbl (24): Sequence, Total.individuals, Female, Male, Unknown, Complete.measu...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the 19 specified variables from the dataset</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">select</span>(d, <span class="st">"Species1"</span>, <span class="st">"Family1"</span>, <span class="st">"Order1"</span>, <span class="st">"Beak.Width"</span>, <span class="st">"Beak.Depth"</span>, <span class="st">"Tarsus.Length"</span>, <span class="st">"Wing.Length"</span>, <span class="st">"Tail.Length"</span>, <span class="st">"Mass"</span>, <span class="st">"Habitat"</span>, <span class="st">"Migration"</span>, <span class="st">"Trophic.Niche"</span>, <span class="st">"Min.Latitude"</span>, <span class="st">"Trophic.Level"</span>, <span class="st">"Max.Latitude"</span>, <span class="st">"Centroid.Latitude"</span>, <span class="st">"Range.Size"</span>, <span class="st">"Beak.Length_Culmen"</span>, <span class="st">"Primary.Lifestyle"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Select quantitative variables</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>quant_vars <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_if</span>(is.numeric)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Select categorical variables</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>cat_vars <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_if</span>(is.character)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print categorical variables</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cat_vars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 11,009 × 7
+   Species1 Family1 Order1 Habitat Trophic.Niche Trophic.Level Primary.Lifestyle
+   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;         &lt;chr&gt;            
+ 1 Accipit… Accipi… Accip… Forest  Vertivore     Carnivore     Insessorial      
+ 2 Accipit… Accipi… Accip… Shrubl… Vertivore     Carnivore     Insessorial      
+ 3 Accipit… Accipi… Accip… Woodla… Vertivore     Carnivore     Generalist       
+ 4 Accipit… Accipi… Accip… Forest  Vertivore     Carnivore     Insessorial      
+ 5 Accipit… Accipi… Accip… Forest  Vertivore     Carnivore     Generalist       
+ 6 Accipit… Accipi… Accip… Forest  Vertivore     Carnivore     Insessorial      
+ 7 Accipit… Accipi… Accip… Forest  Vertivore     Carnivore     Insessorial      
+ 8 Accipit… Accipi… Accip… Forest  Vertivore     Carnivore     Generalist       
+ 9 Accipit… Accipi… Accip… Forest  Vertivore     Carnivore     Insessorial      
+10 Accipit… Accipi… Accip… Woodla… Vertivore     Carnivore     Aerial           
+# ℹ 10,999 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform exploratory data analysis for quantitative variables</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(quant_vars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">quant_vars</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">11009</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 8%">
+<col style="width: 11%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Beak.Width</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">6.58</td>
+<td style="text-align: right;">5.15</td>
+<td style="text-align: right;">0.70</td>
+<td style="text-align: right;">3.60</td>
+<td style="text-align: right;">5.00</td>
+<td style="text-align: right;">7.70</td>
+<td style="text-align: right;">88.90</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Beak.Depth</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">8.06</td>
+<td style="text-align: right;">7.59</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">3.80</td>
+<td style="text-align: right;">5.80</td>
+<td style="text-align: right;">9.40</td>
+<td style="text-align: right;">110.90</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tarsus.Length</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">28.73</td>
+<td style="text-align: right;">24.84</td>
+<td style="text-align: right;">2.50</td>
+<td style="text-align: right;">17.40</td>
+<td style="text-align: right;">22.00</td>
+<td style="text-align: right;">31.30</td>
+<td style="text-align: right;">481.20</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wing.Length</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">124.78</td>
+<td style="text-align: right;">93.44</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">66.80</td>
+<td style="text-align: right;">91.50</td>
+<td style="text-align: right;">145.50</td>
+<td style="text-align: right;">789.90</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tail.Length</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">86.65</td>
+<td style="text-align: right;">61.08</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">50.20</td>
+<td style="text-align: right;">68.70</td>
+<td style="text-align: right;">99.90</td>
+<td style="text-align: right;">812.80</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mass</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">267.15</td>
+<td style="text-align: right;">1883.03</td>
+<td style="text-align: right;">1.90</td>
+<td style="text-align: right;">15.00</td>
+<td style="text-align: right;">35.50</td>
+<td style="text-align: right;">121.00</td>
+<td style="text-align: right;">111000.00</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Migration</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.29</td>
+<td style="text-align: right;">0.62</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Min.Latitude</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">-6.44</td>
+<td style="text-align: right;">22.37</td>
+<td style="text-align: right;">-85.58</td>
+<td style="text-align: right;">-21.22</td>
+<td style="text-align: right;">-7.15</td>
+<td style="text-align: right;">8.07</td>
+<td style="text-align: right;">68.08</td>
+<td style="text-align: left;">▁▃▇▃▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Max.Latitude</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">11.51</td>
+<td style="text-align: right;">23.32</td>
+<td style="text-align: right;">-65.12</td>
+<td style="text-align: right;">-3.33</td>
+<td style="text-align: right;">9.00</td>
+<td style="text-align: right;">22.07</td>
+<td style="text-align: right;">85.01</td>
+<td style="text-align: left;">▁▃▇▂▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Centroid.Latitude</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">2.95</td>
+<td style="text-align: right;">22.07</td>
+<td style="text-align: right;">-71.04</td>
+<td style="text-align: right;">-9.73</td>
+<td style="text-align: right;">-0.22</td>
+<td style="text-align: right;">15.28</td>
+<td style="text-align: right;">78.43</td>
+<td style="text-align: left;">▁▃▇▂▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Range.Size</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">2578859.38</td>
+<td style="text-align: right;">7629310.06</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">54052.87</td>
+<td style="text-align: right;">416076.61</td>
+<td style="text-align: right;">2187040.21</td>
+<td style="text-align: right;">136304432.20</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Beak.Length_Culmen</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">26.36</td>
+<td style="text-align: right;">24.39</td>
+<td style="text-align: right;">4.50</td>
+<td style="text-align: right;">14.70</td>
+<td style="text-align: right;">19.90</td>
+<td style="text-align: right;">28.50</td>
+<td style="text-align: right;">414.20</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="challenge-1" class="level1">
+<h1>challenge 1</h1>
+<section id="one-factor-anova-and-inference" class="level3">
+<h3 class="anchored" data-anchor-id="one-factor-anova-and-inference"><strong><em>One-Factor ANOVA and Inference</em></strong></h3>
+<section id="step-1" class="level4">
+<h4 class="anchored" data-anchor-id="step-1"><strong>Step 1</strong></h4>
+<ul>
+<li>Make boxplots of log(<strong>Mass</strong>) in relation to <strong>Trophic.Level</strong> and <strong>Migration</strong> behavior type. For each plot, drop from the visualization all species records where the categorical variable of interest is missing from the dataset. lso, you will want to convert the variable <strong>Migration</strong> (which is scored as a number: “1”, “2”, or “3”) from class numeric to either being classified as a factor or as a character (string) variable.A</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the dataset</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/difiore/ada-2024-datasets/main/AVONETdataset1.csv"</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(f, <span class="at">col_names =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 11009 Columns: 37
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (13): Species1, Family1, Order1, Avibase.ID1, Mass.Source, Mass.Refs.Oth...
+dbl (24): Sequence, Total.individuals, Female, Male, Unknown, Complete.measu...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter out missing values</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Trophic.Level) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(Migration) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">log</span>(Mass)))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert Migration to  character variable</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a> filtered_data<span class="sc">$</span>Migration <span class="ot">&lt;-</span> <span class="fu">as.character</span>(filtered_data<span class="sc">$</span>Migration)  </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create boxplots</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">log</span>(Mass) <span class="sc">~</span> Trophic.Level <span class="sc">*</span> Migration, <span class="at">data =</span> filtered_data,  </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Boxplots of log(Mass) by Trophic Level and Migration"</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Trophic Level"</span>, <span class="at">ylab =</span> <span class="st">"log(Mass)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Exercise-11_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Step 2: a ) Run linear models using the <code>lm()</code> function to look at the relationship between log(<strong>Mass</strong>) and <strong>Trophic.Level</strong> and between log(<strong>Mass</strong>) and <strong>Migration</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run linear model for log(Mass) and Trophic.Level</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>model_trophic <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Mass) <span class="sc">~</span> Trophic.Level, <span class="at">data =</span> filtered_data)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the model</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_trophic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(Mass) ~ Trophic.Level, data = filtered_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.4230 -1.1559 -0.3047  0.9004  7.5525 
+
+Coefficients:
+                       Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)             3.80916    0.01970 193.354  &lt; 2e-16 ***
+Trophic.LevelHerbivore  0.25566    0.03410   7.498 6.96e-14 ***
+Trophic.LevelOmnivore   0.01410    0.04122   0.342    0.732    
+Trophic.LevelScavenger  4.63107    0.34467  13.436  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.539 on 10982 degrees of freedom
+Multiple R-squared:  0.02091,   Adjusted R-squared:  0.02064 
+F-statistic: 78.18 on 3 and 10982 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run linear model for log(Mass) and Migration</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>model_migration <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Mass) <span class="sc">~</span> <span class="fu">as.factor</span>(Migration), <span class="at">data =</span> filtered_data)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the model</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_migration)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(Mass) ~ as.factor(Migration), data = filtered_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.8924 -1.1769 -0.3088  0.9152  7.8427 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)            3.77457    0.01636 230.710  &lt; 2e-16 ***
+as.factor(Migration)2  0.75971    0.04731  16.059  &lt; 2e-16 ***
+as.factor(Migration)3  0.37647    0.05155   7.303 3.02e-13 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.535 on 10983 degrees of freedom
+Multiple R-squared:  0.02563,   Adjusted R-squared:  0.02546 
+F-statistic: 144.5 on 2 and 10983 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>b ) Examine the output of the resultant linear models. Is log(<strong>Mass</strong>) associated with either <strong>Trophic.Level</strong> or <strong>Migration</strong> category? That is, in the global test of significance, is the F statistic large enough to reject the null hypothesis of an F value of zero?</p>
+<ol type="1">
+<li><p>For the model examining the relationship between log(mass) and Trophic level, the F-statistic is 78.18 with a very small p-value (&lt; 2.2e-16), indicating a statistically significant model (F(3, 10982) = 78.18, p &lt; 0.01). This suggests evidence to reject the null hypothesis of an F value of zero, indicating an association between log(mass) and Trophic level.</p></li>
+<li><p>Similarly, for the model examining the relationship between log(mass) and Migration, the F-statistic is 144.5 with a very small p-value (&lt; 2.2e-16). This also indicates that the overall model is statistically significant with (F(2, 10983) = 144.5, p &lt; 0.01), providing evidence to reject the null hypothesis of a value of zero, indicating an association between log(mass) and Migration</p></li>
+</ol>
+<p><strong><em>In conclusion, both Trophic level and Migration are associated with log(mass) based on the F-statistic value.</em></strong></p>
+<p>c) Given the regression coefficients returned for your <strong>Migration</strong> model, which <strong>Migration</strong> categor(ies) are different than the reference level? What level is the reference level? Relevel and assess differences among the remaining pair of <strong>Migration</strong> categories.</p>
+<p><strong>Answer:</strong> Migration categories 2 and 3 differ significantly from the reference level, which is Migration category 1. This is evident from the significant coefficients for Migration levels 2 and 3 compared to the reference level in the above output (p &lt; 0.01).</p>
+<p>To assess the differences between the remaining pair of Migration categories (2 and 3), we can use releveling.</p>
+<p>For releveling, we can change the reference level to one of the other categories and compare it against the new reference level. Let’s say we want to compare Migration level 1 against Migration level 2, while keeping migration level 3 as the reference.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Relevel Migration to compare Migration 1 against Migration 2</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>filtered_data<span class="sc">$</span>Migration <span class="ot">&lt;-</span> <span class="fu">relevel</span>(<span class="fu">factor</span>(filtered_data<span class="sc">$</span>Migration), <span class="at">ref =</span> <span class="st">"3"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the linear model </span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>model_migration_releveled <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Mass) <span class="sc">~</span> <span class="fu">as.factor</span>(Migration), <span class="at">data =</span> filtered_data)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the re-leveled model</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_migration_releveled)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(Mass) ~ as.factor(Migration), data = filtered_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.8924 -1.1769 -0.3088  0.9152  7.8427 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)            4.15104    0.04889  84.909  &lt; 2e-16 ***
+as.factor(Migration)1 -0.37647    0.05155  -7.303 3.02e-13 ***
+as.factor(Migration)2  0.38324    0.06603   5.804 6.67e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.535 on 10983 degrees of freedom
+Multiple R-squared:  0.02563,   Adjusted R-squared:  0.02546 
+F-statistic: 144.5 on 2 and 10983 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>The output indicates that migration categories 1 and 2 are associated with differences in log(Mass) compared to Migration category 3, which is the reference level in this coding. This association is supported by an extremely low p-value (&lt; 0.01).</p>
+<p>Step 3: Conduct a post-hoc Tukey Honest Significant Differences test to also evaluate which <strong>Migration</strong> categories differ “significantly” from one another</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Since post-hoc tukey  works with aov function, Fit the model using aov()</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>model_migration_aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log</span>(Mass) <span class="sc">~</span> <span class="fu">as.factor</span>(Migration), <span class="at">data =</span> filtered_data)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_migration_aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                        Df Sum Sq Mean Sq F value Pr(&gt;F)    
+as.factor(Migration)     2    681   340.5   144.5 &lt;2e-16 ***
+Residuals            10983  25882     2.4                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform Tukey's HSD test for pairwise comparisons</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>tukey_result <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(model_migration_aov)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>tukey_result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = log(Mass) ~ as.factor(Migration), data = filtered_data)
+
+$`as.factor(Migration)`
+          diff        lwr        upr p adj
+1-3 -0.3764693 -0.4973105 -0.2556282     0
+2-3  0.3832374  0.2284536  0.5380211     0
+2-1  0.7597067  0.6488157  0.8705977     0</code></pre>
+</div>
+</div>
+<p><strong><em>Interpretation of Post - Hoc Tukey’s test</em></strong> : The difference in log(Mass) between Migration categories 1 and Migration 3 is estimated to be -0.3765, with very small p value (p = 0), indicating a statistically significant difference between these categories. Similarly, the difference in log(Mass) between Migration categories 2 and Migration 3 is estimated to be 0.3832, with very small p-value (p= 0), indicating a statistically significant difference between these categories. Additionally, the difference in log(Mass) between Migration categories 2 and Migration 1 is estimated to be 0.7597, with very small p value (p = 0), indicating a statistically significant difference between these categories. Overall, these results demonstrate significant differences in log(Mass) among all pairs of Migration categories.</p>
+<p>Step 4: Use a permutation approach to inference to generate a null distribution of F statistic values for the model of log(Mass) in relation to Trophic.Level and calculate a p value for your original F statistic. You can do this either by programming your own permutation test (e.g., by shuffling values for the predictor or response variable among observations and calculating an F statistic for each replicate) or by using the {infer} workflow and setting calculate(stat=“F”).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the original linear model</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>original_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Mass) <span class="sc">~</span> Trophic.Level, <span class="at">data =</span> filtered_data)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the original F statistic</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>original_anova <span class="ot">&lt;-</span> <span class="fu">anova</span>(original_model)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>original_F_statistic <span class="ot">&lt;-</span> original_anova<span class="sc">$</span>F[<span class="dv">1</span>]</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># lets do this using permutation methods</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of permutations</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>n_permutations <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize vector to store permuted F statistics</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>permuted_F_statistics <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_permutations)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Permutation test</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># for reproducibility</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_permutations) {</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Permute Trophic.Level</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>  permuted_data <span class="ot">&lt;-</span> filtered_data</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>  permuted_data<span class="sc">$</span>Trophic.Level <span class="ot">&lt;-</span> <span class="fu">sample</span>(permuted_data<span class="sc">$</span>Trophic.Level)</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fit the permuted linear model</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>  permuted_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Mass) <span class="sc">~</span> Trophic.Level, <span class="at">data =</span> permuted_data)</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate permuted F statistic</span></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>  permuted_anova <span class="ot">&lt;-</span> <span class="fu">anova</span>(permuted_model)</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>  permuted_F_statistics[i] <span class="ot">&lt;-</span> permuted_anova<span class="sc">$</span>F[<span class="dv">1</span>]</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate p-value</span></span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">mean</span>(permuted_F_statistics <span class="sc">&gt;=</span> original_F_statistic)</span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<p><strong><em>Interpretation:</em></strong> <strong>A p-value of 0 indicates that in the permutation test suggests that the likelihood of observing strong association between log(Mass) and Trophic Level by random chance alone is extremely low. Therefore, we reject the null hypothesis and conclude that there is a significant relationship between log(Mass) and Trophic Level.</strong></p>
+<p><strong>CHALLANGE 2</strong></p>
+<p><strong>Step 1: Create the following two new variables and add them to AVONET data-set.</strong></p>
+<ul>
+<li><p><strong>Relative beak length</strong>, which you should calculate as the <em>residual</em> of log(<strong>Beak.Length_Culmen</strong>) on log(<strong>Mass</strong>).</p></li>
+<li><p><strong>Relative tarsus length</strong>, which you should calculate as the <em>residual</em> of log(<strong>Tarsus.Length</strong>) on log(<strong>Mass</strong>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit linear models for log(Beak.Length_Culmen) and log(Tarsus.Length) as functions of log(Mass)</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>beak_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Beak.Length_Culmen) <span class="sc">~</span> <span class="fu">log</span>(Mass), <span class="at">data =</span> d)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>tarsus_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Tarsus.Length) <span class="sc">~</span> <span class="fu">log</span>(Mass), <span class="at">data =</span> d)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract residuals</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>beak_residuals <span class="ot">&lt;-</span> <span class="fu">residuals</span>(beak_model)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>tarsus_residuals <span class="ot">&lt;-</span> <span class="fu">residuals</span>(tarsus_model)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the residuals as new variables to the AVONET dataset</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Relative_Beak_Length =</span> beak_residuals,</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">Relative_Tarsus_Length =</span> tarsus_residuals)</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 11,009 × 39
+   Sequence Species1   Family1 Order1 Avibase.ID1 Total.individuals Female  Male
+      &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;                   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+ 1     3103 Accipiter… Accipi… Accip… AVIBASE-BB…                 5      2     0
+ 2     3090 Accipiter… Accipi… Accip… AVIBASE-1A…                10      4     6
+ 3     3125 Accipiter… Accipi… Accip… AVIBASE-AD…                11      4     5
+ 4     3116 Accipiter… Accipi… Accip… AVIBASE-68…                 4      4     0
+ 5     3092 Accipiter… Accipi… Accip… AVIBASE-84…                 8      4     4
+ 6     3091 Accipiter… Accipi… Accip… AVIBASE-6B…                 1      0     1
+ 7     3089 Accipiter… Accipi… Accip… AVIBASE-9D…                 6      2     2
+ 8     3115 Accipiter… Accipi… Accip… AVIBASE-21…                 5      2     3
+ 9     3130 Accipiter… Accipi… Accip… AVIBASE-32…                 7      1     5
+10     3123 Accipiter… Accipi… Accip… AVIBASE-EB…                 5      2     3
+# ℹ 10,999 more rows
+# ℹ 31 more variables: Unknown &lt;dbl&gt;, Complete.measures &lt;dbl&gt;,
+#   Beak.Length_Culmen &lt;dbl&gt;, Beak.Length_Nares &lt;dbl&gt;, Beak.Width &lt;dbl&gt;,
+#   Beak.Depth &lt;dbl&gt;, Tarsus.Length &lt;dbl&gt;, Wing.Length &lt;dbl&gt;,
+#   Kipps.Distance &lt;dbl&gt;, Secondary1 &lt;dbl&gt;, `Hand-Wing.Index` &lt;dbl&gt;,
+#   Tail.Length &lt;dbl&gt;, Mass &lt;dbl&gt;, Mass.Source &lt;chr&gt;, Mass.Refs.Other &lt;chr&gt;,
+#   Inference &lt;chr&gt;, Traits.inferred &lt;chr&gt;, Reference.species &lt;chr&gt;, …</code></pre>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="step-2" class="level4">
+<h4 class="anchored" data-anchor-id="step-2"><strong>Step 2</strong></h4>
+<ul>
+<li>Make a boxplot or violin plot of your new relative tarsus length variable in relation to <strong>Primary.Lifestyle</strong> and of your new relative beak length variable in relation to <strong>Trophic.Niche.</strong></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove missing values from Trophic Niche</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> d[<span class="sc">!</span><span class="fu">is.na</span>(d<span class="sc">$</span>Trophic.Niche), ]</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot of relative tarsus length variable in relation to Primary Lifestyle</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(filtered_data, <span class="fu">aes</span>(<span class="at">x =</span> Primary.Lifestyle, <span class="at">y =</span> Relative_Tarsus_Length)) <span class="sc">+</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Primary Lifestyle"</span>, <span class="at">y =</span> <span class="st">"Relative Tarsus Length"</span>) <span class="sc">+</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Exercise-11_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Violin plot of relative beak length variable in relation to Trophic Niche</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(filtered_data, <span class="fu">aes</span>(<span class="at">x =</span> Trophic.Niche, <span class="at">y =</span> Relative_Beak_Length)) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">fill =</span> <span class="st">"lightgreen"</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Trophic Niche"</span>, <span class="at">y =</span> <span class="st">"Relative Beak Length"</span>) <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Exercise-11_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Step 3: a) Run an ANOVA analyses to look at the association between geographic range size and the variable <strong>Migration</strong>. You should first drop those observations for which <strong>Migration</strong> is not scored and also look at the distribution of the variable <strong>Range.Size</strong> to decide whether and how it might need to be transformed. Based on the global model, is range size associated with form of migration? How much of the variance in your measure of range size is associated with <strong>Migration</strong> behavior style?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"effectsize"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop observations where Migration is not scored</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> filtered_data[<span class="sc">!</span><span class="fu">is.na</span>(filtered_data<span class="sc">$</span>Migration), ]</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the distribution of Range.Size</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(filtered_data<span class="sc">$</span>Range.Size, <span class="at">main =</span> <span class="st">"Distribution of Range Size"</span>)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution is positively skewed, lets do log transformation of the data</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply log transformation to Range.Size</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>filtered_data<span class="sc">$</span>log_Range_Size <span class="ot">&lt;-</span> <span class="fu">log</span>(filtered_data<span class="sc">$</span>Range.Size)</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the distribution of log-transformed Range.Size</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(filtered_data<span class="sc">$</span>log_Range_Size, <span class="at">main =</span> <span class="st">"Distribution of Log-Transformed Range Size"</span>)</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution has been approximating normal with log transformation</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the linear regression model (global model)</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Range.Size) <span class="sc">~</span> <span class="fu">as.factor</span>(Migration), <span class="at">data =</span> filtered_data)</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate effect size (partial eta squared)</span></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>partial_eta_squared <span class="ot">&lt;-</span> <span class="fu">eta_squared</span>(model, <span class="at">partial =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>partial_eta_squared</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Yes, range size is significantly associated with the form of migration. This is indicated by the highly significant p-value (&lt; 2.2e-16) obtained from the ANOVA analysis (F(2, 10929) = 519.5, p &lt;0.01).The effect size (partial eta squared) for the association between range size and migration behavior style is 0.09. This indicates that approximately 9% of the variance in range size is associated with migration behavior style.</p>
+<p>b) Given the regression coefficients returned in output of the model, which <strong>Migration</strong> categor(ies) are different than the reference level? What level is the reference level? Relevel and assess differences among the remaining pair of <strong>Migration</strong> categories. Also conduct a post-hoc Tukey Honest Significant Differences test to also evaluate which <strong>Migration</strong> categories differ “significantly” from one another</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the linear regression model</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Range.Size) <span class="sc">~</span> <span class="fu">as.factor</span>(Migration), <span class="at">data =</span> filtered_data)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(Range.Size) ~ as.factor(Migration), data = filtered_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-14.5710  -1.4516   0.4346   1.9735   5.9240 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)           12.03692    0.02973  404.89   &lt;2e-16 ***
+as.factor(Migration)2  1.78157    0.08601   20.71   &lt;2e-16 ***
+as.factor(Migration)3  2.51390    0.09374   26.82   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.783 on 10929 degrees of freedom
+  (67 observations deleted due to missingness)
+Multiple R-squared:  0.08681,   Adjusted R-squared:  0.08665 
+F-statistic: 519.5 on 2 and 10929 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In this model the reference level was 2</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Relevel the Migration variable with migration 1 as the reference level</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>filtered_data<span class="sc">$</span>Migration <span class="ot">&lt;-</span> <span class="fu">relevel</span>(<span class="fu">factor</span>(filtered_data<span class="sc">$</span>Migration), <span class="at">ref =</span> <span class="st">"1"</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the linear regression model</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Mass) <span class="sc">~</span> Migration, <span class="at">data =</span> filtered_data)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(Mass) ~ Migration, data = filtered_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.8924 -1.1774 -0.3084  0.9136  7.8432 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  3.77412    0.01637  230.58  &lt; 2e-16 ***
+Migration2   0.76016    0.04732   16.07  &lt; 2e-16 ***
+Migration3   0.37692    0.05156    7.31 2.86e-13 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.535 on 10978 degrees of freedom
+  (18 observations deleted due to missingness)
+Multiple R-squared:  0.02567,   Adjusted R-squared:  0.02549 
+F-statistic: 144.6 on 2 and 10978 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Conduct post-hoc Tukey HSD test</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>tukey_result <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(<span class="fu">aov</span>(<span class="fu">log</span>(Mass) <span class="sc">~</span> Migration, <span class="at">data =</span> filtered_data))</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>tukey_result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = log(Mass) ~ Migration, data = filtered_data)
+
+$Migration
+          diff        lwr        upr p adj
+2-1  0.7601622  0.6492503  0.8710742     0
+3-1  0.3769249  0.2560616  0.4977882     0
+3-2 -0.3832374 -0.5380450 -0.2284297     0</code></pre>
+</div>
+</div>
+<p>In the output of the model, Migration1 and Migration3 have coefficients that are different from zero, indicating that these categories are different from the reference level with p value &lt;0.01.The reference level is Migration2. The data has been re-leveled, with Migration 1 serving as the reference level. The Migration categories 2 and 3 are found to be different from the reference level (Migration category 1) with p value &lt;0.01. The Tukey HSD test results indicate significant differences in log(Mass) means among all pairs of Migration categories (1-2, 3-2, and 3-1) with p value of 0. Therefore, all Migration categories exhibit statistically significant differences in log(Mass), as indicated by both the regression coefficients and the post-hoc Tukey HSD test.</p>
+<p>Step 4: Winnow your original data to just consider birds from the Infraorder “Passeriformes” (song birds).</p>
+<ul>
+<li><p>Run separate one-factor ANOVA analyses to look at the association between [1] relative beak length and <strong>Primary.Lifestyle</strong> and between [2] relative beak length and <strong>Trophic.Level</strong>. In doing so…</p>
+<ul>
+<li><p>Make boxplots of response variable by each predictor and by the combination of predictors.</p></li>
+<li><p>Run linear models for each predictor separately and interpret the model output.</p></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Filter original data for birds from the Infraorder "Passeriformes"</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>passeriformes_data <span class="ot">&lt;-</span> filtered_data <span class="sc">%&gt;%</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Order1 <span class="sc">==</span> <span class="st">"Passeriformes"</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Boxplots of response variable by each predictor and by combination of predictors</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot of relative beak length by Primary Lifestyle</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(passeriformes_data, <span class="fu">aes</span>(<span class="at">x =</span> Primary.Lifestyle, <span class="at">y =</span> Relative_Beak_Length)) <span class="sc">+</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relative Beak Length by Primary Lifestyle"</span>,</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Primary Lifestyle"</span>,</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Relative Beak Length"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Exercise-11_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot of relative beak length by Trophic Level</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(passeriformes_data, <span class="fu">aes</span>(<span class="at">x =</span> Trophic.Level, <span class="at">y =</span> Relative_Beak_Length)) <span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relative Beak Length by Trophic Level"</span>,</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Trophic Level"</span>,</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Relative Beak Length"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Exercise-11_files/figure-html/unnamed-chunk-11-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot of relative beak length by combination of Primary Lifestyle and Trophic Level</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(passeriformes_data, <span class="fu">aes</span>(<span class="at">x =</span> Primary.Lifestyle, <span class="at">y =</span> Relative_Beak_Length, <span class="at">fill =</span> Trophic.Level)) <span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relative Beak Length by Primary Lifestyle and Trophic Level"</span>,</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Primary Lifestyle"</span>,</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Relative Beak Length"</span>,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Trophic Level"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Exercise-11_files/figure-html/unnamed-chunk-11-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Run linear models for each predictor separately and interpret the model output</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear model for Primary Lifestyle</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>model_primary_lifestyle <span class="ot">&lt;-</span> <span class="fu">lm</span>(Relative_Beak_Length <span class="sc">~</span> Primary.Lifestyle, <span class="at">data =</span> passeriformes_data)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_primary_lifestyle)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Relative_Beak_Length ~ Primary.Lifestyle, data = passeriformes_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.6314 -0.1380 -0.0172  0.1118  1.2241 
+
+Coefficients:
+                             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                  -0.34950    0.02158  -16.19   &lt;2e-16 ***
+Primary.LifestyleGeneralist   0.27926    0.02306   12.11   &lt;2e-16 ***
+Primary.LifestyleInsessorial  0.35342    0.02181   16.20   &lt;2e-16 ***
+Primary.LifestyleTerrestrial  0.27924    0.02249   12.42   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2158 on 6610 degrees of freedom
+Multiple R-squared:  0.05581,   Adjusted R-squared:  0.05538 
+F-statistic: 130.2 on 3 and 6610 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear model for Trophic Level</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>model_trophic_level <span class="ot">&lt;-</span> <span class="fu">lm</span>(Relative_Beak_Length <span class="sc">~</span> Trophic.Level, <span class="at">data =</span> passeriformes_data)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_trophic_level)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Relative_Beak_Length ~ Trophic.Level, data = passeriformes_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.67045 -0.13692 -0.02063  0.11129  1.23116 
+
+Coefficients:
+                        Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)            -0.003170   0.003501  -0.906  0.36518    
+Trophic.LevelHerbivore -0.118713   0.006956 -17.066  &lt; 2e-16 ***
+Trophic.LevelOmnivore   0.017902   0.006606   2.710  0.00675 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2165 on 6611 degrees of freedom
+Multiple R-squared:  0.05001,   Adjusted R-squared:  0.04972 
+F-statistic:   174 on 2 and 6611 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p><strong><em>INTERPRETATION OF MODEL:</em></strong></p>
+<p>For the primary lifestyle and relative beak length the (F (3, 6602) = 128.9) , p-value (&lt; 0.01)) indicates that the model is statistically significant, suggesting that there is a relationship between Primary Lifestyle and Relative Beak Length. Similarly, for the trophic level and relative beak length , the (F (2, 6603) = 174.3) , p-value (&lt; 0.01)) indicates that the model is statistically significant, suggesting that there is a relationship between trophic level and Relative Beak Length.</p>
+<p>Step 5:Run a two-factor model to look at the association between relative beak length and both <strong>Primary.Lifestyle</strong> and <strong>Trophic.Level</strong> among the passeriforms. Based on the model output, what would you conclude about how relative beak length is related to these two variables?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run a linear model without interaction term</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Relative_Beak_Length <span class="sc">~</span> Primary.Lifestyle <span class="sc">+</span> Trophic.Level, <span class="at">data =</span> passeriformes_data)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># View the model summary</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Relative_Beak_Length ~ Primary.Lifestyle + Trophic.Level, 
+    data = passeriformes_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.65365 -0.13329 -0.02284  0.10274  1.20180 
+
+Coefficients:
+                              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                  -0.349502   0.020958 -16.677   &lt;2e-16 ***
+Primary.LifestyleGeneralist   0.301517   0.022582  13.352   &lt;2e-16 ***
+Primary.LifestyleInsessorial  0.375698   0.021295  17.642   &lt;2e-16 ***
+Primary.LifestyleTerrestrial  0.302119   0.021942  13.769   &lt;2e-16 ***
+Trophic.LevelHerbivore       -0.126397   0.006761 -18.695   &lt;2e-16 ***
+Trophic.LevelOmnivore         0.012140   0.006450   1.882   0.0599 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2096 on 6608 degrees of freedom
+Multiple R-squared:   0.11, Adjusted R-squared:  0.1093 
+F-statistic: 163.4 on 5 and 6608 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<ul>
+<li>INTERPRETATION: The linear model examining the association between relative beak length and both Primary.Lifestyle and Trophic.Level among the passeriforms reveals several significant findings. Each level of Primary.Lifestyle (Generalist, Insessorial, Terrestrial) demonstrates a significant difference in intercept compared to the reference level, suggesting distinct baseline relative beak lengths for each category (p &lt; 0.01). Similarly, Trophic.Level Herbivore exhibits a unique intercept, indicating varying baseline relative beak lengths for these categories compared to the reference level (p &lt; 0.01). The coefficient for Trophic.Level Omnivore, however, does not reach statistical significance with the p value &gt;0.05. Overall, the model is statistically significant (F = 162.5, p-value &lt; 2.2e-16), and it explains approximately 10.9% of the variance in relative beak length among passeriforms.</li>
+</ul>
+<p>STEP 6:Finally, run an additional two-way model with the same dataset and predictors, but adding the possibility of an interaction term. To do this, you should modify your model formula using the colon operator (<code>:</code>) to specify the interaction, e.g., relative beak length ~ <strong>Primary.Lifestyle</strong> + <strong>Trophic.Level</strong> + <strong>Primary.Lifestyle:Trophic.Level</strong>. Based on the model output, what would you now conclude about how relative beak length is related to these two variables?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run a linear model with interaction term </span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Relative_Beak_Length <span class="sc">~</span> Primary.Lifestyle <span class="sc">+</span> Trophic.Level <span class="sc">+</span> Primary.Lifestyle<span class="sc">:</span>Trophic.Level, <span class="at">data =</span> passeriformes_data)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># View the model summary</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Relative_Beak_Length ~ Primary.Lifestyle + Trophic.Level + 
+    Primary.Lifestyle:Trophic.Level, data = passeriformes_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.64623 -0.12836 -0.02078  0.10070  1.21924 
+
+Coefficients: (2 not defined because of singularities)
+                                                    Estimate Std. Error t value
+(Intercept)                                         -0.34950    0.02066 -16.918
+Primary.LifestyleGeneralist                          0.33010    0.02367  13.948
+Primary.LifestyleInsessorial                         0.35826    0.02104  17.031
+Primary.LifestyleTerrestrial                         0.35714    0.02210  16.162
+Trophic.LevelHerbivore                              -0.27502    0.01562 -17.608
+Trophic.LevelOmnivore                               -0.11080    0.01550  -7.150
+Primary.LifestyleGeneralist:Trophic.LevelHerbivore   0.05033    0.02584   1.948
+Primary.LifestyleInsessorial:Trophic.LevelHerbivore  0.20115    0.01750  11.494
+Primary.LifestyleTerrestrial:Trophic.LevelHerbivore       NA         NA      NA
+Primary.LifestyleGeneralist:Trophic.LevelOmnivore    0.09898    0.02351   4.210
+Primary.LifestyleInsessorial:Trophic.LevelOmnivore   0.15527    0.01726   8.996
+Primary.LifestyleTerrestrial:Trophic.LevelOmnivore        NA         NA      NA
+                                                    Pr(&gt;|t|)    
+(Intercept)                                          &lt; 2e-16 ***
+Primary.LifestyleGeneralist                          &lt; 2e-16 ***
+Primary.LifestyleInsessorial                         &lt; 2e-16 ***
+Primary.LifestyleTerrestrial                         &lt; 2e-16 ***
+Trophic.LevelHerbivore                               &lt; 2e-16 ***
+Trophic.LevelOmnivore                               9.61e-13 ***
+Primary.LifestyleGeneralist:Trophic.LevelHerbivore    0.0515 .  
+Primary.LifestyleInsessorial:Trophic.LevelHerbivore  &lt; 2e-16 ***
+Primary.LifestyleTerrestrial:Trophic.LevelHerbivore       NA    
+Primary.LifestyleGeneralist:Trophic.LevelOmnivore   2.59e-05 ***
+Primary.LifestyleInsessorial:Trophic.LevelOmnivore   &lt; 2e-16 ***
+Primary.LifestyleTerrestrial:Trophic.LevelOmnivore        NA    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2066 on 6604 degrees of freedom
+Multiple R-squared:  0.1358,    Adjusted R-squared:  0.1346 
+F-statistic: 115.3 on 9 and 6604 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<ul>
+<li><p><em>INTERPRETATION OF RESULT</em>: Each level of Primary.Lifestyle (Generalist, Insessorial, Terrestrial) is associated with a distinct intercept, indicating the baseline relative beak length for each category compared to the reference level (p &lt; 0.01). Similarly, each level of Trophic.Level (Herbivore, Omnivore) is associated with a different intercept, signifying the baseline relative beak length for each category compared to the reference level (p &lt; 0.01).The coefficient of the interaction effect implies that there is no statistically significant impact on relative beak length when both the bird’s Primary Lifestyle is Generalist and the Trophic Level is Herbivore (p = 0.0538). However, all other coefficients suggest an additional effect on relative beak length when the bird’s Primary Lifestyle is Generalist, Insessorial, or Terrestrial, and its Trophic Level is Omnivore or Herbivore (p &lt; 0.01).</p>
+<p>The model demonstrates a moderate level of explanatory capability, as indicated by the multiple R-squared value of 13.57%. This suggests that approximately 13.57% of the variance in relative beak length is accounted for by the predictors included in the model. . Furthermore, the F-statistic, with a notably low p-value (&lt; 0.01), confirms the overall significance of the model, providing strong evidence to support its reliability and relevance.</p></li>
+</ul>
+<p>Step 7: Use the <code>interaction.plot()</code> function to visualize the interaction between <strong>Primary.Lifestyle</strong> and <strong>Trophic.Level</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the interaction plot</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x.factor =</span> passeriformes_data<span class="sc">$</span>Primary.Lifestyle,</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"Primary Lifestyle"</span>,</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">trace.factor =</span> passeriformes_data<span class="sc">$</span>Trophic.Level,</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">trace.label =</span> <span class="st">"Trophic Level"</span>,</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">response =</span> passeriformes_data<span class="sc">$</span>Relative_Beak_Length,</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun =</span> mean,</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">"Mean Relative Beak Length"</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Exercise-11_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
