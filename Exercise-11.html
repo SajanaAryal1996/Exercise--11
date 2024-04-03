@@ -398,7 +398,7 @@ dbl (24): Sequence, Total.individuals, Female, Male, Unknown, Complete.measu...
 </div>
 </section>
 <section id="challenge-1" class="level1">
-<h1>challenge 1</h1>
+<h1>Challenge 1</h1>
 <section id="one-factor-anova-and-inference" class="level3">
 <h3 class="anchored" data-anchor-id="one-factor-anova-and-inference"><strong><em>One-Factor ANOVA and Inference</em></strong></h3>
 <section id="step-1" class="level4">
@@ -439,7 +439,7 @@ dbl (24): Sequence, Total.individuals, Female, Male, Unknown, Complete.measu...
 </div>
 <p>Step 2: a ) Run linear models using the <code>lm()</code> function to look at the relationship between log(<strong>Mass</strong>) and <strong>Trophic.Level</strong> and between log(<strong>Mass</strong>) and <strong>Migration</strong>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run linear model for log(Mass) and Trophic.Level</span></span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run linear regression  model for log(Mass) and Trophic.Level</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>model_trophic <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Mass) <span class="sc">~</span> Trophic.Level, <span class="at">data =</span> filtered_data)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the model</span></span>
@@ -466,7 +466,7 @@ Residual standard error: 1.539 on 10982 degrees of freedom
 Multiple R-squared:  0.02091,   Adjusted R-squared:  0.02064 
 F-statistic: 78.18 on 3 and 10982 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run linear model for log(Mass) and Migration</span></span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run linear regression model for log(Mass) and Migration</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>model_migration <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Mass) <span class="sc">~</span> <span class="fu">as.factor</span>(Migration), <span class="at">data =</span> filtered_data)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the model</span></span>
@@ -495,19 +495,19 @@ F-statistic: 144.5 on 2 and 10983 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>b ) Examine the output of the resultant linear models. Is log(<strong>Mass</strong>) associated with either <strong>Trophic.Level</strong> or <strong>Migration</strong> category? That is, in the global test of significance, is the F statistic large enough to reject the null hypothesis of an F value of zero?</p>
 <ol type="1">
-<li><p>For the model examining the relationship between log(mass) and Trophic level, the F-statistic is 78.18 with a very small p-value (&lt; 2.2e-16), indicating a statistically significant model (F(3, 10982) = 78.18, p &lt; 0.01). This suggests evidence to reject the null hypothesis of an F value of zero, indicating an association between log(mass) and Trophic level.</p></li>
-<li><p>Similarly, for the model examining the relationship between log(mass) and Migration, the F-statistic is 144.5 with a very small p-value (&lt; 2.2e-16). This also indicates that the overall model is statistically significant with (F(2, 10983) = 144.5, p &lt; 0.01), providing evidence to reject the null hypothesis of a value of zero, indicating an association between log(mass) and Migration</p></li>
+<li><p>For the model examining the relationship between log(mass) and Trophic level, the F-statistic is 78.18 with a very small p-value (&lt; 0.001), indicating a statistically significant model (F(3, 10982) = 78.18, p &lt; 0.001). This suggests evidence to reject the null hypothesis of an F value of zero, indicating an association between log(mass) and Trophic level.</p></li>
+<li><p>Similarly, for the model examining the relationship between log(mass) and Migration, the F-statistic is 144.5 with a very small p-value (&lt; 0.001). This also indicates that the overall model is statistically significant with (F(2, 10983) = 144.5, p &lt; 0.001), providing evidence to reject the null hypothesis of a value of zero, indicating an association between log(mass) and Migration</p></li>
 </ol>
 <p><strong><em>In conclusion, both Trophic level and Migration are associated with log(mass) based on the F-statistic value.</em></strong></p>
 <p>c) Given the regression coefficients returned for your <strong>Migration</strong> model, which <strong>Migration</strong> categor(ies) are different than the reference level? What level is the reference level? Relevel and assess differences among the remaining pair of <strong>Migration</strong> categories.</p>
-<p><strong>Answer:</strong> Migration categories 2 and 3 differ significantly from the reference level, which is Migration category 1. This is evident from the significant coefficients for Migration levels 2 and 3 compared to the reference level in the above output (p &lt; 0.01).</p>
+<p><strong><em>Answer:</em></strong> Migration categories 2 and 3 differ significantly from the reference level, which is Migration category 1. This is evident from the significant coefficients for Migration levels 2 and 3 compared to the reference level in the above output (p &lt; 0.001).</p>
 <p>To assess the differences between the remaining pair of Migration categories (2 and 3), we can use releveling.</p>
 <p>For releveling, we can change the reference level to one of the other categories and compare it against the new reference level. Let’s say we want to compare Migration level 1 against Migration level 2, while keeping migration level 3 as the reference.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Relevel Migration to compare Migration 1 against Migration 2</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>filtered_data<span class="sc">$</span>Migration <span class="ot">&lt;-</span> <span class="fu">relevel</span>(<span class="fu">factor</span>(filtered_data<span class="sc">$</span>Migration), <span class="at">ref =</span> <span class="st">"3"</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the linear model </span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the linear regression  model </span></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>model_migration_releveled <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Mass) <span class="sc">~</span> <span class="fu">as.factor</span>(Migration), <span class="at">data =</span> filtered_data)</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the re-leveled model</span></span>
@@ -534,7 +534,7 @@ Multiple R-squared:  0.02563,   Adjusted R-squared:  0.02546
 F-statistic: 144.5 on 2 and 10983 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<p>The output indicates that migration categories 1 and 2 are associated with differences in log(Mass) compared to Migration category 3, which is the reference level in this coding. This association is supported by an extremely low p-value (&lt; 0.01).</p>
+<p>The output indicates that migration categories 1 and 2 are associated with differences in log(Mass) compared to Migration category 3, which is the reference level in this coding. This association is supported by an extremely low p-value (&lt; 0.001) .</p>
 <p>Step 3: Conduct a post-hoc Tukey Honest Significant Differences test to also evaluate which <strong>Migration</strong> categories differ “significantly” from one another</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Since post-hoc tukey  works with aov function, Fit the model using aov()</span></span>
@@ -683,70 +683,44 @@ $`as.factor(Migration)`
 </div>
 <p>Step 3: a) Run an ANOVA analyses to look at the association between geographic range size and the variable <strong>Migration</strong>. You should first drop those observations for which <strong>Migration</strong> is not scored and also look at the distribution of the variable <strong>Range.Size</strong> to decide whether and how it might need to be transformed. Based on the global model, is range size associated with form of migration? How much of the variance in your measure of range size is associated with <strong>Migration</strong> behavior style?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"effectsize"</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop observations where Migration is not scored</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> filtered_data[<span class="sc">!</span><span class="fu">is.na</span>(filtered_data<span class="sc">$</span>Migration), ]</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the distribution of Range.Size</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(filtered_data<span class="sc">$</span>Range.Size, <span class="at">main =</span> <span class="st">"Distribution of Range Size"</span>)</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution is positively skewed, lets do log transformation of the data</span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply log transformation to Range.Size</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>filtered_data<span class="sc">$</span>log_Range_Size <span class="ot">&lt;-</span> <span class="fu">log</span>(filtered_data<span class="sc">$</span>Range.Size)</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the distribution of log-transformed Range.Size</span></span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(filtered_data<span class="sc">$</span>log_Range_Size, <span class="at">main =</span> <span class="st">"Distribution of Log-Transformed Range Size"</span>)</span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution has been approximating normal with log transformation</span></span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the linear regression model (global model)</span></span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Range.Size) <span class="sc">~</span> <span class="fu">as.factor</span>(Migration), <span class="at">data =</span> filtered_data)</span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span>
-<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate effect size (partial eta squared)</span></span>
-<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>partial_eta_squared <span class="ot">&lt;-</span> <span class="fu">eta_squared</span>(model, <span class="at">partial =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>partial_eta_squared</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop observations where Migration is not scored</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> filtered_data[<span class="sc">!</span><span class="fu">is.na</span>(filtered_data<span class="sc">$</span>Migration), ]</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the distribution of Range.Size</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(filtered_data<span class="sc">$</span>Range.Size, <span class="at">main =</span> <span class="st">"Distribution of Range Size"</span>)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution is positively skewed, lets do log transformation of the data</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply log transformation to Range.Size</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>filtered_data<span class="sc">$</span>log_Range_Size <span class="ot">&lt;-</span> <span class="fu">log</span>(filtered_data<span class="sc">$</span>Range.Size)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the distribution of log-transformed Range.Size</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(filtered_data<span class="sc">$</span>log_Range_Size, <span class="at">main =</span> <span class="st">"Distribution of Log-Transformed Range Size"</span>)</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution has been approximating normal with log transformation</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the linear regression model (global model)</span></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Range.Size) <span class="sc">~</span> <span class="fu">as.factor</span>(Migration), <span class="at">data =</span> filtered_data)</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate effect size (partial eta squared)</span></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>partial_eta_squared <span class="ot">&lt;-</span> <span class="fu">eta_squared</span>(model, <span class="at">partial =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>partial_eta_squared</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Yes, range size is significantly associated with the form of migration. This is indicated by the highly significant p-value (&lt; 2.2e-16) obtained from the ANOVA analysis (F(2, 10929) = 519.5, p &lt;0.01).The effect size (partial eta squared) for the association between range size and migration behavior style is 0.09. This indicates that approximately 9% of the variance in range size is associated with migration behavior style.</p>
-<p>b) Given the regression coefficients returned in output of the model, which <strong>Migration</strong> categor(ies) are different than the reference level? What level is the reference level? Relevel and assess differences among the remaining pair of <strong>Migration</strong> categories. Also conduct a post-hoc Tukey Honest Significant Differences test to also evaluate which <strong>Migration</strong> categories differ “significantly” from one another</p>
+<p>Yes, range size is significantly associated with the form of migration. This is indicated by the highly significant p-value (&lt; 0.001) obtained from the ANOVA analysis (F(2, 10929) = 519.5, p &lt;0.001).The effect size (partial eta squared) for the association between range size and migration behavior style is 0.09. This indicates that approximately 9% of the variance in range size is associated with migration behavior style.</p>
+<p>b) Given the regression coefficients returned in output of the model, which <strong>Migration</strong> categories are different than the reference level? What level is the reference level? Relevel and assess differences among the remaining pair of <strong>Migration</strong> categories. Also conduct a post-hoc Tukey Honest Significant Differences test to also evaluate which <strong>Migration</strong> categories differ “significantly” from one another</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the linear regression model</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Range.Size) <span class="sc">~</span> <span class="fu">as.factor</span>(Migration), <span class="at">data =</span> filtered_data)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = log(Range.Size) ~ as.factor(Migration), data = filtered_data)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--14.5710  -1.4516   0.4346   1.9735   5.9240 
-
-Coefficients:
-                      Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)           12.03692    0.02973  404.89   &lt;2e-16 ***
-as.factor(Migration)2  1.78157    0.08601   20.71   &lt;2e-16 ***
-as.factor(Migration)3  2.51390    0.09374   26.82   &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 2.783 on 10929 degrees of freedom
-  (67 observations deleted due to missingness)
-Multiple R-squared:  0.08681,   Adjusted R-squared:  0.08665 
-F-statistic: 519.5 on 2 and 10929 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In this model the reference level was 2</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Relevel the Migration variable with migration 1 as the reference level</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>filtered_data<span class="sc">$</span>Migration <span class="ot">&lt;-</span> <span class="fu">relevel</span>(<span class="fu">factor</span>(filtered_data<span class="sc">$</span>Migration), <span class="at">ref =</span> <span class="st">"1"</span>)</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the linear regression model</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Mass) <span class="sc">~</span> Migration, <span class="at">data =</span> filtered_data)</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In the model provide above, the reference level was 1</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Relevel the Migration variable with migration 2 as the reference level</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>filtered_data<span class="sc">$</span>Migration <span class="ot">&lt;-</span> <span class="fu">relevel</span>(<span class="fu">factor</span>(filtered_data<span class="sc">$</span>Migration), <span class="at">ref =</span> <span class="st">"2"</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the linear regression model</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Mass) <span class="sc">~</span> Migration, <span class="at">data =</span> filtered_data)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -758,9 +732,9 @@ Residuals:
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  3.77412    0.01637  230.58  &lt; 2e-16 ***
-Migration2   0.76016    0.04732   16.07  &lt; 2e-16 ***
-Migration3   0.37692    0.05156    7.31 2.86e-13 ***
+(Intercept)  4.53428    0.04440 102.133  &lt; 2e-16 ***
+Migration1  -0.76016    0.04732 -16.065  &lt; 2e-16 ***
+Migration3  -0.38324    0.06604  -5.803  6.7e-09 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -769,9 +743,9 @@ Residual standard error: 1.535 on 10978 degrees of freedom
 Multiple R-squared:  0.02567,   Adjusted R-squared:  0.02549 
 F-statistic: 144.6 on 2 and 10978 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Conduct post-hoc Tukey HSD test</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>tukey_result <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(<span class="fu">aov</span>(<span class="fu">log</span>(Mass) <span class="sc">~</span> Migration, <span class="at">data =</span> filtered_data))</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>tukey_result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Conduct post-hoc Tukey HSD test</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>tukey_result <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(<span class="fu">aov</span>(<span class="fu">log</span>(Mass) <span class="sc">~</span> Migration, <span class="at">data =</span> filtered_data))</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>tukey_result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -780,12 +754,12 @@ Fit: aov(formula = log(Mass) ~ Migration, data = filtered_data)
 
 $Migration
           diff        lwr        upr p adj
-2-1  0.7601622  0.6492503  0.8710742     0
-3-1  0.3769249  0.2560616  0.4977882     0
-3-2 -0.3832374 -0.5380450 -0.2284297     0</code></pre>
+1-2 -0.7601622 -0.8710742 -0.6492503     0
+3-2 -0.3832374 -0.5380450 -0.2284297     0
+3-1  0.3769249  0.2560616  0.4977882     0</code></pre>
 </div>
 </div>
-<p>In the output of the model, Migration1 and Migration3 have coefficients that are different from zero, indicating that these categories are different from the reference level with p value &lt;0.01.The reference level is Migration2. The data has been re-leveled, with Migration 1 serving as the reference level. The Migration categories 2 and 3 are found to be different from the reference level (Migration category 1) with p value &lt;0.01. The Tukey HSD test results indicate significant differences in log(Mass) means among all pairs of Migration categories (1-2, 3-2, and 3-1) with p value of 0. Therefore, all Migration categories exhibit statistically significant differences in log(Mass), as indicated by both the regression coefficients and the post-hoc Tukey HSD test.</p>
+<p>In the output of the model, Migration2 and Migration3 have coefficients that are different from zero, indicating that these categories are different from the reference level with p value &lt;0.001.The reference level is Migration1. The data has been re-leveled, with Migration 2 serving as the reference level. The Migration categories 1 and 3 are found to be different from the reference level (Migration category 2) with p value &lt;0.001. The Tukey HSD test results indicate significant differences in log(Mass) means among all pairs of Migration categories (1-2, 3-2, and 3-1) with p value of 0. Therefore, all Migration categories exhibit statistically significant differences in log(Mass), as indicated by both the regression coefficients and the post-hoc Tukey HSD test.</p>
 <p>Step 4: Winnow your original data to just consider birds from the Infraorder “Passeriformes” (song birds).</p>
 <ul>
 <li><p>Run separate one-factor ANOVA analyses to look at the association between [1] relative beak length and <strong>Primary.Lifestyle</strong> and between [2] relative beak length and <strong>Trophic.Level</strong>. In doing so…</p>
@@ -795,47 +769,47 @@ $Migration
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Filter original data for birds from the Infraorder "Passeriformes"</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>passeriformes_data <span class="ot">&lt;-</span> filtered_data <span class="sc">%&gt;%</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Order1 <span class="sc">==</span> <span class="st">"Passeriformes"</span>)</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Boxplots of response variable by each predictor and by combination of predictors</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot of relative beak length by Primary Lifestyle</span></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(passeriformes_data, <span class="fu">aes</span>(<span class="at">x =</span> Primary.Lifestyle, <span class="at">y =</span> Relative_Beak_Length)) <span class="sc">+</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relative Beak Length by Primary Lifestyle"</span>,</span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Primary Lifestyle"</span>,</span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Relative Beak Length"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Filter original data for birds from the Infraorder "Passeriformes"</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>passeriformes_data <span class="ot">&lt;-</span> filtered_data <span class="sc">%&gt;%</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Order1 <span class="sc">==</span> <span class="st">"Passeriformes"</span>)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Boxplots of response variable by each predictor and by combination of predictors</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot of relative beak length by Primary Lifestyle</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(passeriformes_data, <span class="fu">aes</span>(<span class="at">x =</span> Primary.Lifestyle, <span class="at">y =</span> Relative_Beak_Length)) <span class="sc">+</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relative Beak Length by Primary Lifestyle"</span>,</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Primary Lifestyle"</span>,</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Relative Beak Length"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Exercise-11_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot of relative beak length by Trophic Level</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(passeriformes_data, <span class="fu">aes</span>(<span class="at">x =</span> Trophic.Level, <span class="at">y =</span> Relative_Beak_Length)) <span class="sc">+</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relative Beak Length by Trophic Level"</span>,</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Trophic Level"</span>,</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Relative Beak Length"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot of relative beak length by Trophic Level</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(passeriformes_data, <span class="fu">aes</span>(<span class="at">x =</span> Trophic.Level, <span class="at">y =</span> Relative_Beak_Length)) <span class="sc">+</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relative Beak Length by Trophic Level"</span>,</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Trophic Level"</span>,</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Relative Beak Length"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Exercise-11_files/figure-html/unnamed-chunk-11-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot of relative beak length by combination of Primary Lifestyle and Trophic Level</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(passeriformes_data, <span class="fu">aes</span>(<span class="at">x =</span> Primary.Lifestyle, <span class="at">y =</span> Relative_Beak_Length, <span class="at">fill =</span> Trophic.Level)) <span class="sc">+</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relative Beak Length by Primary Lifestyle and Trophic Level"</span>,</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Primary Lifestyle"</span>,</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Relative Beak Length"</span>,</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Trophic Level"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot of relative beak length by combination of Primary Lifestyle and Trophic Level</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(passeriformes_data, <span class="fu">aes</span>(<span class="at">x =</span> Primary.Lifestyle, <span class="at">y =</span> Relative_Beak_Length, <span class="at">fill =</span> Trophic.Level)) <span class="sc">+</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relative Beak Length by Primary Lifestyle and Trophic Level"</span>,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Primary Lifestyle"</span>,</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Relative Beak Length"</span>,</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Trophic Level"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Exercise-11_files/figure-html/unnamed-chunk-11-3.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Run linear models for each predictor separately and interpret the model output</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear model for Primary Lifestyle</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>model_primary_lifestyle <span class="ot">&lt;-</span> <span class="fu">lm</span>(Relative_Beak_Length <span class="sc">~</span> Primary.Lifestyle, <span class="at">data =</span> passeriformes_data)</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_primary_lifestyle)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Run linear models for each predictor separately and interpret the model output</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear regression model for Primary Lifestyle</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>model_primary_lifestyle <span class="ot">&lt;-</span> <span class="fu">lm</span>(Relative_Beak_Length <span class="sc">~</span> Primary.Lifestyle, <span class="at">data =</span> passeriformes_data)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_primary_lifestyle)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -858,9 +832,9 @@ Residual standard error: 0.2158 on 6610 degrees of freedom
 Multiple R-squared:  0.05581,   Adjusted R-squared:  0.05538 
 F-statistic: 130.2 on 3 and 6610 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear model for Trophic Level</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>model_trophic_level <span class="ot">&lt;-</span> <span class="fu">lm</span>(Relative_Beak_Length <span class="sc">~</span> Trophic.Level, <span class="at">data =</span> passeriformes_data)</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_trophic_level)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear regression model for Trophic Level</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>model_trophic_level <span class="ot">&lt;-</span> <span class="fu">lm</span>(Relative_Beak_Length <span class="sc">~</span> Trophic.Level, <span class="at">data =</span> passeriformes_data)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_trophic_level)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -884,14 +858,14 @@ F-statistic:   174 on 2 and 6611 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <p><strong><em>INTERPRETATION OF MODEL:</em></strong></p>
-<p>For the primary lifestyle and relative beak length the (F (3, 6602) = 128.9) , p-value (&lt; 0.01)) indicates that the model is statistically significant, suggesting that there is a relationship between Primary Lifestyle and Relative Beak Length. Similarly, for the trophic level and relative beak length , the (F (2, 6603) = 174.3) , p-value (&lt; 0.01)) indicates that the model is statistically significant, suggesting that there is a relationship between trophic level and Relative Beak Length.</p>
+<p>For the primary lifestyle and relative beak length the (F (3, 6602) = 128.9) , p-value (&lt; 0.001)) indicates that the model is statistically significant, suggesting that there is a relationship between Primary Lifestyle and Relative Beak Length. Similarly, for the trophic level and relative beak length , the (F (2, 6603) = 174.3) , p-value (&lt; 0.001)) indicates that the model is statistically significant, suggesting that there is a relationship between trophic level and Relative Beak Length.</p>
 <p>Step 5:Run a two-factor model to look at the association between relative beak length and both <strong>Primary.Lifestyle</strong> and <strong>Trophic.Level</strong> among the passeriforms. Based on the model output, what would you conclude about how relative beak length is related to these two variables?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run a linear model without interaction term</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Relative_Beak_Length <span class="sc">~</span> Primary.Lifestyle <span class="sc">+</span> Trophic.Level, <span class="at">data =</span> passeriformes_data)</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># View the model summary</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run a linear regression model without interaction term</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Relative_Beak_Length <span class="sc">~</span> Primary.Lifestyle <span class="sc">+</span> Trophic.Level, <span class="at">data =</span> passeriformes_data)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># View the model summary</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -919,15 +893,15 @@ F-statistic: 163.4 on 5 and 6608 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <ul>
-<li>INTERPRETATION: The linear model examining the association between relative beak length and both Primary.Lifestyle and Trophic.Level among the passeriforms reveals several significant findings. Each level of Primary.Lifestyle (Generalist, Insessorial, Terrestrial) demonstrates a significant difference in intercept compared to the reference level, suggesting distinct baseline relative beak lengths for each category (p &lt; 0.01). Similarly, Trophic.Level Herbivore exhibits a unique intercept, indicating varying baseline relative beak lengths for these categories compared to the reference level (p &lt; 0.01). The coefficient for Trophic.Level Omnivore, however, does not reach statistical significance with the p value &gt;0.05. Overall, the model is statistically significant (F = 162.5, p-value &lt; 2.2e-16), and it explains approximately 10.9% of the variance in relative beak length among passeriforms.</li>
+<li>INTERPRETATION: The linear model examining the association between relative beak length and both Primary.Lifestyle and Trophic.Level among the passeriforms reveals several significant findings. Each level of Primary.Lifestyle (Generalist, Insessorial, Terrestrial) demonstrates a significant difference in intercept compared to the reference level, suggesting distinct baseline relative beak lengths for each category (p &lt; 0.001). Similarly, Trophic.Level Herbivore exhibits a unique intercept, indicating varying baseline relative beak lengths for these categories compared to the reference level (p &lt; 0.001). However, the coefficient for Trophic.Level Omnivore, does not reach statistical significance with the p value &gt;0.05. Overall, the model is statistically significant (F = 162.5, p-value &lt; 0.001), and it explains approximately 10.9% of the variance in relative beak length among passeriforms.</li>
 </ul>
 <p>STEP 6:Finally, run an additional two-way model with the same dataset and predictors, but adding the possibility of an interaction term. To do this, you should modify your model formula using the colon operator (<code>:</code>) to specify the interaction, e.g., relative beak length ~ <strong>Primary.Lifestyle</strong> + <strong>Trophic.Level</strong> + <strong>Primary.Lifestyle:Trophic.Level</strong>. Based on the model output, what would you now conclude about how relative beak length is related to these two variables?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run a linear model with interaction term </span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Relative_Beak_Length <span class="sc">~</span> Primary.Lifestyle <span class="sc">+</span> Trophic.Level <span class="sc">+</span> Primary.Lifestyle<span class="sc">:</span>Trophic.Level, <span class="at">data =</span> passeriformes_data)</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># View the model summary</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run a linear regression model with interaction term </span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Relative_Beak_Length <span class="sc">~</span> Primary.Lifestyle <span class="sc">+</span> Trophic.Level <span class="sc">+</span> Primary.Lifestyle<span class="sc">:</span>Trophic.Level, <span class="at">data =</span> passeriformes_data)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># View the model summary</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -974,23 +948,23 @@ F-statistic: 115.3 on 9 and 6604 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <ul>
-<li><p><em>INTERPRETATION OF RESULT</em>: Each level of Primary.Lifestyle (Generalist, Insessorial, Terrestrial) is associated with a distinct intercept, indicating the baseline relative beak length for each category compared to the reference level (p &lt; 0.01). Similarly, each level of Trophic.Level (Herbivore, Omnivore) is associated with a different intercept, signifying the baseline relative beak length for each category compared to the reference level (p &lt; 0.01).The coefficient of the interaction effect implies that there is no statistically significant impact on relative beak length when both the bird’s Primary Lifestyle is Generalist and the Trophic Level is Herbivore (p = 0.0538). However, all other coefficients suggest an additional effect on relative beak length when the bird’s Primary Lifestyle is Generalist, Insessorial, or Terrestrial, and its Trophic Level is Omnivore or Herbivore (p &lt; 0.01).</p>
-<p>The model demonstrates a moderate level of explanatory capability, as indicated by the multiple R-squared value of 13.57%. This suggests that approximately 13.57% of the variance in relative beak length is accounted for by the predictors included in the model. . Furthermore, the F-statistic, with a notably low p-value (&lt; 0.01), confirms the overall significance of the model, providing strong evidence to support its reliability and relevance.</p></li>
+<li><p><em>INTERPRETATION OF RESULT</em>: Each level of Primary.Lifestyle (Generalist, Insessorial, Terrestrial) is associated with a distinct intercept, indicating the baseline relative beak length for each category compared to the reference level (p &lt; 0.001). Similarly, each level of Trophic.Level (Herbivore, Omnivore) is associated with a different intercept, signifying the baseline relative beak length for each category compared to the reference level (p &lt; 0.001).The coefficient of the interaction effect implies that there is no statistically significant impact on relative beak length when both the bird’s Primary Lifestyle is Generalist and the Trophic Level is Herbivore (p = 0.0538). However, all other coefficients suggest an additional effect on relative beak length when the bird’s Primary Lifestyle is Generalist, Insessorial, or Terrestrial, and its Trophic Level is Omnivore or Herbivore (p &lt; 0.001).</p>
+<p>The model demonstrates a moderate level of explanatory capability, as indicated by the multiple R-squared value of 13.57%. This suggests that approximately 13.57% of the variance in relative beak length is accounted for by the predictors included in the model. . Furthermore, the F-statistic, with a notably low p-value (&lt; 0.001), confirms the overall significance of the model.</p>
+<p>Step 7: Use the <code>interaction.plot()</code> function to visualize the interaction between <strong>Primary.Lifestyle</strong> and <strong>Trophic.Level</strong>.</p></li>
 </ul>
-<p>Step 7: Use the <code>interaction.plot()</code> function to visualize the interaction between <strong>Primary.Lifestyle</strong> and <strong>Trophic.Level</strong>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the interaction plot</span></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x.factor =</span> passeriformes_data<span class="sc">$</span>Primary.Lifestyle,</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"Primary Lifestyle"</span>,</span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">trace.factor =</span> passeriformes_data<span class="sc">$</span>Trophic.Level,</span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">trace.label =</span> <span class="st">"Trophic Level"</span>,</span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">response =</span> passeriformes_data<span class="sc">$</span>Relative_Beak_Length,</span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun =</span> mean,</span>
-<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">"Mean Relative Beak Length"</span></span>
-<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the interaction plot</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x.factor =</span> passeriformes_data<span class="sc">$</span>Primary.Lifestyle,</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"Primary Lifestyle"</span>,</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">trace.factor =</span> passeriformes_data<span class="sc">$</span>Trophic.Level,</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">trace.label =</span> <span class="st">"Trophic Level"</span>,</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">response =</span> passeriformes_data<span class="sc">$</span>Relative_Beak_Length,</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun =</span> mean,</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">"Mean Relative Beak Length"</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Exercise-11_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>

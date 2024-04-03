@@ -42,7 +42,7 @@ skim(quant_vars)
 
 ```
 
-# challenge 1
+# Challenge 1
 
 ### ***One-Factor ANOVA and Inference***
 
@@ -74,13 +74,13 @@ boxplot(log(Mass) ~ Trophic.Level * Migration, data = filtered_data,
 Step 2: a ) Run linear models using the `lm()` function to look at the relationship between log(**Mass**) and **Trophic.Level** and between log(**Mass**) and **Migration**.
 
 ```{r, warning=FALSE}
-# Run linear model for log(Mass) and Trophic.Level
+# Run linear regression  model for log(Mass) and Trophic.Level
 model_trophic <- lm(log(Mass) ~ Trophic.Level, data = filtered_data)
 
 # Summary of the model
 summary(model_trophic)
 
-# Run linear model for log(Mass) and Migration
+# Run linear regression model for log(Mass) and Migration
 model_migration <- lm(log(Mass) ~ as.factor(Migration), data = filtered_data)
 
 # Summary of the model
@@ -91,15 +91,15 @@ summary(model_migration)
 
 b ) Examine the output of the resultant linear models. Is log(**Mass**) associated with either **Trophic.Level** or **Migration** category? That is, in the global test of significance, is the F statistic large enough to reject the null hypothesis of an F value of zero?
 
-1.  For the model examining the relationship between log(mass) and Trophic level, the F-statistic is 78.18 with a very small p-value (\< 2.2e-16), indicating a statistically significant model (F(3, 10982) = 78.18, p \< 0.01). This suggests evidence to reject the null hypothesis of an F value of zero, indicating an association between log(mass) and Trophic level.
+1.  For the model examining the relationship between log(mass) and Trophic level, the F-statistic is 78.18 with a very small p-value (\< 0.001), indicating a statistically significant model (F(3, 10982) = 78.18, p \< 0.001). This suggests evidence to reject the null hypothesis of an F value of zero, indicating an association between log(mass) and Trophic level.
 
-2.  Similarly, for the model examining the relationship between log(mass) and Migration, the F-statistic is 144.5 with a very small p-value (\< 2.2e-16). This also indicates that the overall model is statistically significant with (F(2, 10983) = 144.5, p \< 0.01), providing evidence to reject the null hypothesis of a value of zero, indicating an association between log(mass) and Migration
+2.  Similarly, for the model examining the relationship between log(mass) and Migration, the F-statistic is 144.5 with a very small p-value (\< 0.001). This also indicates that the overall model is statistically significant with (F(2, 10983) = 144.5, p \< 0.001), providing evidence to reject the null hypothesis of a value of zero, indicating an association between log(mass) and Migration
 
 ***In conclusion, both Trophic level and Migration are associated with log(mass) based on the F-statistic value.***
 
 c\) Given the regression coefficients returned for your **Migration** model, which **Migration** categor(ies) are different than the reference level? What level is the reference level? Relevel and assess differences among the remaining pair of **Migration** categories.
 
-**Answer:** Migration categories 2 and 3 differ significantly from the reference level, which is Migration category 1. This is evident from the significant coefficients for Migration levels 2 and 3 compared to the reference level in the above output (p \< 0.01).
+***Answer:*** Migration categories 2 and 3 differ significantly from the reference level, which is Migration category 1. This is evident from the significant coefficients for Migration levels 2 and 3 compared to the reference level in the above output (p \< 0.001).
 
 To assess the differences between the remaining pair of Migration categories (2 and 3), we can use releveling.
 
@@ -109,7 +109,7 @@ For releveling, we can change the reference level to one of the other categories
 # Relevel Migration to compare Migration 1 against Migration 2
 filtered_data$Migration <- relevel(factor(filtered_data$Migration), ref = "3")
 
-# Run the linear model 
+# Run the linear regression  model 
 model_migration_releveled <- lm(log(Mass) ~ as.factor(Migration), data = filtered_data)
 
 # Summary of the re-leveled model
@@ -117,7 +117,7 @@ summary(model_migration_releveled)
 
 ```
 
-The output indicates that migration categories 1 and 2 are associated with differences in log(Mass) compared to Migration category 3, which is the reference level in this coding. This association is supported by an extremely low p-value (\< 0.01).
+The output indicates that migration categories 1 and 2 are associated with differences in log(Mass) compared to Migration category 3, which is the reference level in this coding. This association is supported by an extremely low p-value (\< 0.001) .
 
 Step 3: Conduct a post-hoc Tukey Honest Significant Differences test to also evaluate which **Migration** categories differ “significantly” from one another
 
@@ -138,6 +138,7 @@ tukey_result
 Step 4: Use a permutation approach to inference to generate a null distribution of F statistic values for the model of log(Mass) in relation to Trophic.Level and calculate a p value for your original F statistic. You can do this either by programming your own permutation test (e.g., by shuffling values for the predictor or response variable among observations and calculating an F statistic for each replicate) or by using the {infer} workflow and setting calculate(stat="F").
 
 ```{r, warning=FALSE}
+
 # Fit the original linear model
 original_model <- lm(log(Mass) ~ Trophic.Level, data = filtered_data)
 
@@ -170,8 +171,6 @@ for (i in 1:n_permutations) {
 # Calculate p-value
 p_value <- mean(permuted_F_statistics >= original_F_statistic)
 p_value
-
-
 
 ```
 
@@ -235,7 +234,6 @@ ggplot(filtered_data, aes(x = Trophic.Niche, y = Relative_Beak_Length)) +
 Step 3: a) Run an ANOVA analyses to look at the association between geographic range size and the variable **Migration**. You should first drop those observations for which **Migration** is not scored and also look at the distribution of the variable **Range.Size** to decide whether and how it might need to be transformed. Based on the global model, is range size associated with form of migration? How much of the variance in your measure of range size is associated with **Migration** behavior style?
 
 ```{r, eval = FALSE, warning=FALSE}
-install.packages("effectsize")
 library(tidyverse)
 library(effectsize)
 
@@ -266,18 +264,16 @@ partial_eta_squared
 
 ```
 
-Yes, range size is significantly associated with the form of migration. This is indicated by the highly significant p-value (\< 2.2e-16) obtained from the ANOVA analysis (F(2, 10929) = 519.5, p \<0.01).The effect size (partial eta squared) for the association between range size and migration behavior style is 0.09. This indicates that approximately 9% of the variance in range size is associated with migration behavior style.
+Yes, range size is significantly associated with the form of migration. This is indicated by the highly significant p-value (\< 0.001) obtained from the ANOVA analysis (F(2, 10929) = 519.5, p \<0.001).The effect size (partial eta squared) for the association between range size and migration behavior style is 0.09. This indicates that approximately 9% of the variance in range size is associated with migration behavior style.
 
-b\) Given the regression coefficients returned in output of the model, which **Migration** categor(ies) are different than the reference level? What level is the reference level? Relevel and assess differences among the remaining pair of **Migration** categories. Also conduct a post-hoc Tukey Honest Significant Differences test to also evaluate which **Migration** categories differ “significantly” from one another
+b\) Given the regression coefficients returned in output of the model, which **Migration** categories are different than the reference level? What level is the reference level? Relevel and assess differences among the remaining pair of **Migration** categories. Also conduct a post-hoc Tukey Honest Significant Differences test to also evaluate which **Migration** categories differ “significantly” from one another
 
 ```{r, warning=FALSE}
-# Fit the linear regression model
-model <- lm(log(Range.Size) ~ as.factor(Migration), data = filtered_data)
-summary(model)
-# In this model the reference level was 2
 
-# Relevel the Migration variable with migration 1 as the reference level
-filtered_data$Migration <- relevel(factor(filtered_data$Migration), ref = "1")
+# In the model provide above, the reference level was 1
+
+# Relevel the Migration variable with migration 2 as the reference level
+filtered_data$Migration <- relevel(factor(filtered_data$Migration), ref = "2")
 
 # Fit the linear regression model
 model <- lm(log(Mass) ~ Migration, data = filtered_data)
@@ -290,7 +286,7 @@ tukey_result
 
 ```
 
-In the output of the model, Migration1 and Migration3 have coefficients that are different from zero, indicating that these categories are different from the reference level with p value \<0.01.The reference level is Migration2. The data has been re-leveled, with Migration 1 serving as the reference level. The Migration categories 2 and 3 are found to be different from the reference level (Migration category 1) with p value \<0.01. The Tukey HSD test results indicate significant differences in log(Mass) means among all pairs of Migration categories (1-2, 3-2, and 3-1) with p value of 0. Therefore, all Migration categories exhibit statistically significant differences in log(Mass), as indicated by both the regression coefficients and the post-hoc Tukey HSD test.
+In the output of the model, Migration2 and Migration3 have coefficients that are different from zero, indicating that these categories are different from the reference level with p value \<0.001.The reference level is Migration1. The data has been re-leveled, with Migration 2 serving as the reference level. The Migration categories 1 and 3 are found to be different from the reference level (Migration category 2) with p value \<0.001. The Tukey HSD test results indicate significant differences in log(Mass) means among all pairs of Migration categories (1-2, 3-2, and 3-1) with p value of 0. Therefore, all Migration categories exhibit statistically significant differences in log(Mass), as indicated by both the regression coefficients and the post-hoc Tukey HSD test.
 
 Step 4: Winnow your original data to just consider birds from the Infraorder “Passeriformes” (song birds).
 
@@ -333,11 +329,11 @@ ggplot(passeriformes_data, aes(x = Primary.Lifestyle, y = Relative_Beak_Length, 
 
 # Step 3: Run linear models for each predictor separately and interpret the model output
 
-# Linear model for Primary Lifestyle
+# Linear regression model for Primary Lifestyle
 model_primary_lifestyle <- lm(Relative_Beak_Length ~ Primary.Lifestyle, data = passeriformes_data)
 summary(model_primary_lifestyle)
 
-# Linear model for Trophic Level
+# Linear regression model for Trophic Level
 model_trophic_level <- lm(Relative_Beak_Length ~ Trophic.Level, data = passeriformes_data)
 summary(model_trophic_level)
 
@@ -345,12 +341,12 @@ summary(model_trophic_level)
 
 ***INTERPRETATION OF MODEL:***
 
-For the primary lifestyle and relative beak length the (F (3, 6602) = 128.9) , p-value (\< 0.01)) indicates that the model is statistically significant, suggesting that there is a relationship between Primary Lifestyle and Relative Beak Length. Similarly, for the trophic level and relative beak length , the (F (2, 6603) = 174.3) , p-value (\< 0.01)) indicates that the model is statistically significant, suggesting that there is a relationship between trophic level and Relative Beak Length.
+For the primary lifestyle and relative beak length the (F (3, 6602) = 128.9) , p-value (\< 0.001)) indicates that the model is statistically significant, suggesting that there is a relationship between Primary Lifestyle and Relative Beak Length. Similarly, for the trophic level and relative beak length , the (F (2, 6603) = 174.3) , p-value (\< 0.001)) indicates that the model is statistically significant, suggesting that there is a relationship between trophic level and Relative Beak Length.
 
 Step 5:Run a two-factor model to look at the association between relative beak length and both **Primary.Lifestyle** and **Trophic.Level** among the passeriforms. Based on the model output, what would you conclude about how relative beak length is related to these two variables?
 
 ```{r, warning=FALSE}
-# Run a linear model without interaction term
+# Run a linear regression model without interaction term
 model <- lm(Relative_Beak_Length ~ Primary.Lifestyle + Trophic.Level, data = passeriformes_data)
 
 # View the model summary
@@ -358,12 +354,12 @@ summary(model)
 
 ```
 
--   INTERPRETATION: The linear model examining the association between relative beak length and both Primary.Lifestyle and Trophic.Level among the passeriforms reveals several significant findings. Each level of Primary.Lifestyle (Generalist, Insessorial, Terrestrial) demonstrates a significant difference in intercept compared to the reference level, suggesting distinct baseline relative beak lengths for each category (p \< 0.01). Similarly, Trophic.Level Herbivore exhibits a unique intercept, indicating varying baseline relative beak lengths for these categories compared to the reference level (p \< 0.01). The coefficient for Trophic.Level Omnivore, however, does not reach statistical significance with the p value \>0.05. Overall, the model is statistically significant (F = 162.5, p-value \< 2.2e-16), and it explains approximately 10.9% of the variance in relative beak length among passeriforms.
+-   INTERPRETATION: The linear model examining the association between relative beak length and both Primary.Lifestyle and Trophic.Level among the passeriforms reveals several significant findings. Each level of Primary.Lifestyle (Generalist, Insessorial, Terrestrial) demonstrates a significant difference in intercept compared to the reference level, suggesting distinct baseline relative beak lengths for each category (p \< 0.001). Similarly, Trophic.Level Herbivore exhibits a unique intercept, indicating varying baseline relative beak lengths for these categories compared to the reference level (p \< 0.001). However, the coefficient for Trophic.Level Omnivore, does not reach statistical significance with the p value \>0.05. Overall, the model is statistically significant (F = 162.5, p-value \< 0.001), and it explains approximately 10.9% of the variance in relative beak length among passeriforms.
 
 STEP 6:Finally, run an additional two-way model with the same dataset and predictors, but adding the possibility of an interaction term. To do this, you should modify your model formula using the colon operator (`:`) to specify the interaction, e.g., relative beak length \~ **Primary.Lifestyle** + **Trophic.Level** + **Primary.Lifestyle:Trophic.Level**. Based on the model output, what would you now conclude about how relative beak length is related to these two variables?
 
 ```{r, warning=FALSE}
-# Run a linear model with interaction term 
+# Run a linear regression model with interaction term 
 model <- lm(Relative_Beak_Length ~ Primary.Lifestyle + Trophic.Level + Primary.Lifestyle:Trophic.Level, data = passeriformes_data)
 
 # View the model summary
@@ -372,11 +368,11 @@ summary(model)
 
 ```
 
--   *INTERPRETATION OF RESULT*: Each level of Primary.Lifestyle (Generalist, Insessorial, Terrestrial) is associated with a distinct intercept, indicating the baseline relative beak length for each category compared to the reference level (p \< 0.01). Similarly, each level of Trophic.Level (Herbivore, Omnivore) is associated with a different intercept, signifying the baseline relative beak length for each category compared to the reference level (p \< 0.01).The coefficient of the interaction effect implies that there is no statistically significant impact on relative beak length when both the bird's Primary Lifestyle is Generalist and the Trophic Level is Herbivore (p = 0.0538). However, all other coefficients suggest an additional effect on relative beak length when the bird's Primary Lifestyle is Generalist, Insessorial, or Terrestrial, and its Trophic Level is Omnivore or Herbivore (p \< 0.01).
+-   *INTERPRETATION OF RESULT*: Each level of Primary.Lifestyle (Generalist, Insessorial, Terrestrial) is associated with a distinct intercept, indicating the baseline relative beak length for each category compared to the reference level (p \< 0.001). Similarly, each level of Trophic.Level (Herbivore, Omnivore) is associated with a different intercept, signifying the baseline relative beak length for each category compared to the reference level (p \< 0.001).The coefficient of the interaction effect implies that there is no statistically significant impact on relative beak length when both the bird's Primary Lifestyle is Generalist and the Trophic Level is Herbivore (p = 0.0538). However, all other coefficients suggest an additional effect on relative beak length when the bird's Primary Lifestyle is Generalist, Insessorial, or Terrestrial, and its Trophic Level is Omnivore or Herbivore (p \< 0.001).
 
-    The model demonstrates a moderate level of explanatory capability, as indicated by the multiple R-squared value of 13.57%. This suggests that approximately 13.57% of the variance in relative beak length is accounted for by the predictors included in the model. . Furthermore, the F-statistic, with a notably low p-value (\< 0.01), confirms the overall significance of the model, providing strong evidence to support its reliability and relevance.
+    The model demonstrates a moderate level of explanatory capability, as indicated by the multiple R-squared value of 13.57%. This suggests that approximately 13.57% of the variance in relative beak length is accounted for by the predictors included in the model. . Furthermore, the F-statistic, with a notably low p-value (\< 0.001), confirms the overall significance of the model.
 
-Step 7: Use the `interaction.plot()` function to visualize the interaction between **Primary.Lifestyle** and **Trophic.Level**.
+    Step 7: Use the `interaction.plot()` function to visualize the interaction between **Primary.Lifestyle** and **Trophic.Level**.
 
 ```{r, warning=FALSE}
 library(ggplot2)
